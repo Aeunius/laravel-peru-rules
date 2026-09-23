@@ -1,7 +1,8 @@
 # Laravel Peru Rules
 
-Reglas de validación de Laravel para documentos peruanos: RUC y DNI, por ahora.
-Validan el formato y el dígito verificador sin conectarse a ningún servicio externo.
+Reglas de validación de Laravel para documentos y datos peruanos: RUC, DNI,
+carné de extranjería, pasaporte, celular y placa vehicular. Validan el formato y
+el dígito verificador sin conectarse a ningún servicio externo.
 
 [![tests](https://github.com/Aeunius/laravel-peru-rules/actions/workflows/tests.yml/badge.svg)](https://github.com/Aeunius/laravel-peru-rules/actions/workflows/tests.yml)
 [![Versión en Packagist](https://img.shields.io/packagist/v/aeunius/laravel-peru-rules.svg)](https://packagist.org/packages/aeunius/laravel-peru-rules)
@@ -16,6 +17,11 @@ Validan el formato y el dígito verificador sin conectarse a ningún servicio ex
 | `Ruc::natural()` | `ruc:natural` | Lo mismo, pero solo con el prefijo `10` (persona natural) |
 | `Ruc::juridica()` | `ruc:juridica` | Lo mismo, pero solo con el prefijo `20` (persona jurídica) |
 | `new Dni` | `dni` | 8 dígitos |
+| `new CarneExtranjeria` | `carne_extranjeria` | Hasta 12 letras o números |
+| `new Pasaporte` | `pasaporte` | Hasta 12 letras o números |
+| `DocumentoIdentidad::segun('tipo_doc')` | `documento_identidad:tipo_doc` | El número según el tipo de documento de otro campo (catálogo 06 de la SUNAT) |
+| `new Celular` | `celular` | 9 dígitos que empiezan con 9; acepta `+51` y separadores |
+| `new PlacaVehicular` | `placa_vehicular` | Formato vigente: `ABC-123` o `A1B-234`, con o sin guion |
 
 Se comprueba que el número sea **válido**, no que **exista**: un RUC puede tener
 un dígito verificador correcto y aun así no estar inscrito o no estar activo en
@@ -37,13 +43,14 @@ El service provider se registra solo.
 ## Uso
 
 ```php
-use Aeunius\PeruRules\Rules\Dni;
-use Aeunius\PeruRules\Rules\Ruc;
+use Aeunius\PeruRules\Rules\{Celular, Dni, PlacaVehicular, Ruc};
 
 $request->validate([
     'ruc'         => ['required', new Ruc],
     'ruc_empresa' => ['required', Ruc::juridica()],
     'dni'         => ['required', new Dni],
+    'celular'     => ['required', new Celular],
+    'placa'       => ['nullable', new PlacaVehicular],
 ]);
 ```
 
@@ -64,6 +71,60 @@ completo como texto.
 
 Como cualquier regla de Laravel que no es `required`, las reglas no se aplican a
 un campo vacío.
+
+### Documento según su tipo
+
+Cuando el formulario pide el tipo y el número de documento, `DocumentoIdentidad`
+valida el número con la regla que corresponde al tipo. Los tipos son los del
+**catálogo 06 de la SUNAT**, los mismos de la facturación electrónica:
+
+```php
+use Aeunius\PeruRules\Enums\TipoDocumento;
+use Aeunius\PeruRules\Rules\DocumentoIdentidad;
+use Illuminate\Validation\Rule;
+
+$request->validate([
+    'tipo_doc' => ['required', Rule::enum(TipoDocumento::class)],
+    'num_doc'  => ['required', DocumentoIdentidad::segun('tipo_doc')],
+]);
+```
+
+| Código | Tipo | Se valida con |
+|---|---|---|
+| `0` | Documento tributario de no domiciliado sin RUC | Hasta 15 letras o números |
+| `1` | DNI | `Dni` |
+| `4` | Carné de extranjería | `CarneExtranjeria` |
+| `6` | RUC | `Ruc` |
+| `7` | Pasaporte | `Pasaporte` |
+| `A` | Cédula diplomática de identidad | Hasta 15 letras o números |
+
+El mensaje de error es el de la regla de cada tipo. Si el tipo falta o no es
+válido, el número tampoco pasa. En arreglos se usan comodines:
+`DocumentoIdentidad::segun('clientes.*.tipo_doc')` valida `clientes.2.num_doc`
+con `clientes.2.tipo_doc`.
+
+El enum también sirve fuera de la validación:
+
+```php
+TipoDocumento::from('6')->descripcion();        // "RUC"
+TipoDocumento::Pasaporte->longitudMaxima();     // 12
+TipoDocumento::Dni->isValid('12345678');        // true
+```
+
+### Celular y placa: normalizar antes de guardar
+
+Las reglas `Celular` y `PlacaVehicular` aceptan varias formas de escribir el mismo
+dato. Para guardarlo siempre igual, normalízalo, por ejemplo en
+`prepareForValidation()` de un Form Request:
+
+```php
+use Aeunius\PeruRules\Support\CelularValidator;
+use Aeunius\PeruRules\Support\PlacaVehicularValidator;
+
+CelularValidator::normalizar('+51 987 654 321');   // "987654321"
+PlacaVehicularValidator::normalizar('abc123');     // "ABC-123"
+CelularValidator::normalizar('014567890');         // null: no es un celular
+```
 
 ### Sin Laravel
 

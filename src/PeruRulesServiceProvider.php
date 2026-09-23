@@ -2,8 +2,14 @@
 
 namespace Aeunius\PeruRules;
 
+use Aeunius\PeruRules\Rules\CarneExtranjeria;
+use Aeunius\PeruRules\Rules\Celular;
 use Aeunius\PeruRules\Rules\Dni;
+use Aeunius\PeruRules\Rules\DocumentoIdentidad;
+use Aeunius\PeruRules\Rules\Pasaporte;
+use Aeunius\PeruRules\Rules\PlacaVehicular;
 use Aeunius\PeruRules\Rules\Ruc;
+use Illuminate\Contracts\Validation\DataAwareRule;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Validator as ValidatorFacade;
 use Illuminate\Translation\PotentiallyTranslatedString;
@@ -23,7 +29,7 @@ class PeruRulesServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        // Reglas en texto: 'ruc', 'ruc:natural', 'ruc:juridica' y 'dni'.
+        // Reglas en texto: el nombre de cada regla en snake_case.
         $this->extend('ruc', fn (array $parameters): ValidationRule => match ($parameters[0] ?? null) {
             'natural' => Ruc::natural(),
             'juridica' => Ruc::juridica(),
@@ -32,6 +38,14 @@ class PeruRulesServiceProvider extends PackageServiceProvider
         });
 
         $this->extend('dni', fn (): ValidationRule => new Dni);
+        $this->extend('carne_extranjeria', fn (): ValidationRule => new CarneExtranjeria);
+        $this->extend('pasaporte', fn (): ValidationRule => new Pasaporte);
+        $this->extend('celular', fn (): ValidationRule => new Celular);
+        $this->extend('placa_vehicular', fn (): ValidationRule => new PlacaVehicular);
+
+        $this->extend('documento_identidad', fn (array $parameters): ValidationRule => isset($parameters[0])
+            ? DocumentoIdentidad::segun($parameters[0])
+            : throw new \InvalidArgumentException('La regla documento_identidad necesita el campo del tipo: documento_identidad:tipo_doc.'));
     }
 
     /**
@@ -49,7 +63,13 @@ class PeruRulesServiceProvider extends PackageServiceProvider
             /** @var array<int, string> $parameters */
             $failure = null;
 
-            $factory($parameters)->validate($attribute, $value, function (string $message) use (&$failure): PotentiallyTranslatedString {
+            $rule = $factory($parameters);
+
+            if ($rule instanceof DataAwareRule) {
+                $rule->setData($validator->getData());
+            }
+
+            $rule->validate($attribute, $value, function (string $message) use (&$failure): PotentiallyTranslatedString {
                 return $failure = new PotentiallyTranslatedString($message, $this->app->make('translator'));
             });
 
