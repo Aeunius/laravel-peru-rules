@@ -23,7 +23,10 @@ proyecto usa [versionado semántico](https://semver.org/lang/es/).
 - Regla `PlacaVehicular` para el formato vigente, incluidas las placas especiales
   con prefijo E (Estado, policía, emergencias, diplomáticas), con
   `PlacaVehicularValidator::normalizar()`.
+- `PlacaVehicular` acepta también las placas de motos y mototaxis (`2171-AY`,
+  `5040-6C`, `C5-4481`).
+- Regla `Cci`: 20 dígitos y dígitos de control, con `CciValidator::normalizar()`.
 - Reglas en texto `carne_extranjeria`, `pasaporte`, `celular`,
-  `placa_vehicular` y `documento_identidad:campo`.
+  `placa_vehicular`, `cci` y `documento_identidad:campo`.
 - Mensajes en español e inglés, publicables con
   `php artisan vendor:publish --tag=peru-rules-translations`.

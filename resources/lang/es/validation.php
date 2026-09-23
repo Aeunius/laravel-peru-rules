@@ -13,5 +13,6 @@ return [
     'documento' => 'El campo :attribute debe ser un número de :tipo válido (hasta :max letras o números).',
     'documento_tipo' => 'El campo :attribute no se puede validar porque el tipo de documento no es válido.',
     'celular' => 'El campo :attribute debe ser un celular válido de 9 dígitos que empiece con 9.',
-    'placa_vehicular' => 'El campo :attribute debe ser una placa vehicular válida (por ejemplo, ABC-123).',
+    'placa_vehicular' => 'El campo :attribute debe ser una placa vehicular válida (por ejemplo, ABC-123 o 2171-AY).',
+    'cci' => 'El campo :attribute debe ser un CCI válido de 20 dígitos.',
 ];

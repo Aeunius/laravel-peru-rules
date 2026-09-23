@@ -1,6 +1,7 @@
 <?php
 
 use Aeunius\PeruRules\Rules\CarneExtranjeria;
+use Aeunius\PeruRules\Rules\Cci;
 use Aeunius\PeruRules\Rules\Celular;
 use Aeunius\PeruRules\Rules\Pasaporte;
 use Aeunius\PeruRules\Rules\PlacaVehicular;
@@ -48,6 +49,21 @@ it('rechaza lo que no es una placa', function (string $placa) {
         ->and(valida($placa, 'placa_vehicular')->fails())->toBeTrue();
 })->with('placas invalidas');
 
+it('acepta CCI', function (string $cci) {
+    expect(valida($cci, new Cci)->passes())->toBeTrue()
+        ->and(valida($cci, 'cci')->passes())->toBeTrue();
+})->with('ccis validos');
+
+it('rechaza lo que no es un CCI', function (mixed $cci) {
+    expect(valida($cci, new Cci)->fails())->toBeTrue()
+        ->and(valida($cci, 'cci')->fails())->toBeTrue();
+})->with('ccis invalidos');
+
+it('rechaza el CCI como entero', function () {
+    // 20 dígitos no caben en un entero de PHP: el CCI siempre llega como texto.
+    expect(valida(219100012345678957, new Cci)->fails())->toBeTrue();
+});
+
 it('muestra el mensaje traducido', function (mixed $regla, string $es, string $en) {
     app()->setLocale('es');
     expect(valida('#', $regla)->errors()->first('campo'))->toBe($es);
@@ -72,7 +88,12 @@ it('muestra el mensaje traducido', function (mixed $regla, string $es, string $e
     ],
     'placa' => [
         new PlacaVehicular,
-        'El campo campo debe ser una placa vehicular válida (por ejemplo, ABC-123).',
-        'The campo field must be a valid license plate (for example, ABC-123).',
+        'El campo campo debe ser una placa vehicular válida (por ejemplo, ABC-123 o 2171-AY).',
+        'The campo field must be a valid license plate (for example, ABC-123 or 2171-AY).',
+    ],
+    'cci' => [
+        'cci',
+        'El campo campo debe ser un CCI válido de 20 dígitos.',
+        'The campo field must be a valid 20-digit CCI.',
     ],
 ]);

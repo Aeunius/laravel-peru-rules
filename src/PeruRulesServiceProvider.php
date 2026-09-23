@@ -3,6 +3,7 @@
 namespace Aeunius\PeruRules;
 
 use Aeunius\PeruRules\Rules\CarneExtranjeria;
+use Aeunius\PeruRules\Rules\Cci;
 use Aeunius\PeruRules\Rules\Celular;
 use Aeunius\PeruRules\Rules\Dni;
 use Aeunius\PeruRules\Rules\DocumentoIdentidad;
@@ -42,6 +43,7 @@ class PeruRulesServiceProvider extends PackageServiceProvider
         $this->extend('pasaporte', fn (): ValidationRule => new Pasaporte);
         $this->extend('celular', fn (): ValidationRule => new Celular);
         $this->extend('placa_vehicular', fn (): ValidationRule => new PlacaVehicular);
+        $this->extend('cci', fn (): ValidationRule => new Cci);
 
         $this->extend('documento_identidad', fn (array $parameters): ValidationRule => isset($parameters[0])
             ? DocumentoIdentidad::segun($parameters[0])

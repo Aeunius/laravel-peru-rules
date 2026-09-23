@@ -1,8 +1,8 @@
 # Laravel Peru Rules
 
 Reglas de validación de Laravel para documentos y datos peruanos: RUC, DNI,
-carné de extranjería, pasaporte, celular y placa vehicular. Validan el formato y
-el dígito verificador sin conectarse a ningún servicio externo.
+carné de extranjería, pasaporte, celular, placa vehicular y CCI. Validan el
+formato y los dígitos de control sin conectarse a ningún servicio externo.
 
 [![tests](https://github.com/Aeunius/laravel-peru-rules/actions/workflows/tests.yml/badge.svg)](https://github.com/Aeunius/laravel-peru-rules/actions/workflows/tests.yml)
 [![Versión en Packagist](https://img.shields.io/packagist/v/aeunius/laravel-peru-rules.svg)](https://packagist.org/packages/aeunius/laravel-peru-rules)
@@ -21,7 +21,8 @@ el dígito verificador sin conectarse a ningún servicio externo.
 | `new Pasaporte` | `pasaporte` | Hasta 12 letras o números |
 | `DocumentoIdentidad::segun('tipo_doc')` | `documento_identidad:tipo_doc` | El número según el tipo de documento de otro campo (catálogo 06 de la SUNAT) |
 | `new Celular` | `celular` | 9 dígitos que empiezan con 9; acepta `+51` y separadores |
-| `new PlacaVehicular` | `placa_vehicular` | Formato vigente: `ABC-123` o `A1B-234`, con o sin guion. Incluye las especiales con prefijo E (`E GA-123`, `eGA-123`) |
+| `new PlacaVehicular` | `placa_vehicular` | Autos: `ABC-123` o `A1B-234`, con o sin guion. Especiales con prefijo E: `E GA-123`, `eGA-123`. Motos: `2171-AY`, `5040-6C`, `C5-4481` |
+| `new Cci` | `cci` | 20 dígitos y los dos dígitos de control; acepta espacios y guiones |
 
 Se comprueba que el número sea **válido**, no que **exista**: un RUC puede tener
 un dígito verificador correcto y aun así no estar inscrito o no estar activo en
@@ -43,7 +44,7 @@ El service provider se registra solo.
 ## Uso
 
 ```php
-use Aeunius\PeruRules\Rules\{Celular, Dni, PlacaVehicular, Ruc};
+use Aeunius\PeruRules\Rules\{Cci, Celular, Dni, PlacaVehicular, Ruc};
 
 $request->validate([
     'ruc'         => ['required', new Ruc],
@@ -51,6 +52,7 @@ $request->validate([
     'dni'         => ['required', new Dni],
     'celular'     => ['required', new Celular],
     'placa'       => ['nullable', new PlacaVehicular],
+    'cci'         => ['required', new Cci],
 ]);
 ```
 
@@ -111,21 +113,27 @@ TipoDocumento::Pasaporte->longitudMaxima();     // 12
 TipoDocumento::Dni->isValid('12345678');        // true
 ```
 
-### Celular y placa: normalizar antes de guardar
+### Celular, placa y CCI: normalizar antes de guardar
 
-Las reglas `Celular` y `PlacaVehicular` aceptan varias formas de escribir el mismo
+Las reglas `Celular`, `PlacaVehicular` y `Cci` aceptan varias formas de escribir el mismo
 dato. Para guardarlo siempre igual, normalízalo, por ejemplo en
 `prepareForValidation()` de un Form Request:
 
 ```php
+use Aeunius\PeruRules\Support\CciValidator;
 use Aeunius\PeruRules\Support\CelularValidator;
 use Aeunius\PeruRules\Support\PlacaVehicularValidator;
 
 CelularValidator::normalizar('+51 987 654 321');   // "987654321"
 PlacaVehicularValidator::normalizar('abc123');     // "ABC-123"
 PlacaVehicularValidator::normalizar('e GA-123');   // "EGA-123"
+PlacaVehicularValidator::normalizar('2171ay');     // "2171-AY"
+CciValidator::normalizar('002-191-000123456789-57'); // "00219100012345678957"
 CelularValidator::normalizar('014567890');         // null: no es un celular
 ```
+
+En las placas de motos del tipo `C5-4481` el guion es obligatorio: sin él,
+`C54481` se lee como la placa de auto `C54-481`.
 
 ### Sin Laravel
 
@@ -168,6 +176,30 @@ Por ejemplo, para el RUC de la SUNAT, `20131312955`:
 2×5 + 0×4 + 1×3 + 3×2 + 1×7 + 3×6 + 1×5 + 2×4 + 9×3 + 5×2 = 94
 94 mod 11 = 6   →   11 − 6 = 5   →   dígito verificador 5 ✓
 ```
+
+## Cómo se valida el CCI
+
+El CCI tiene 20 dígitos: entidad (3), oficina (3), cuenta (12) y dos dígitos de
+control. El primero verifica entidad + oficina, y el segundo, la cuenta. Cada uno
+se calcula así:
+
+1. Multiplica los dígitos, de izquierda a derecha, por `1, 2, 1, 2, …`.
+2. Si un producto tiene dos cifras, suma sus cifras (`14` cuenta como `1 + 4`).
+3. Suma todo. El dígito de control es lo que falta para la siguiente decena:
+   `(10 − suma mod 10) mod 10`.
+
+Para `002-191-000123456789-57`:
+
+```
+002191        → 0 + 0 + 2 + 2 + 9 + 2 = 15               → 5
+000123456789  → 0+0+0+2+2+6+4+(1+0)+6+(1+4)+8+(1+8) = 43  → 7
+```
+
+No hay una especificación pública del algoritmo. Se comprobó con 11 CCI que
+empresas publican para recibir pagos, de BCP, BBVA, Interbank, Banco de la
+Nación, Caja Arequipa y Caja Piura: coinciden los 22 dígitos de control. Solo se
+valida el formato: el paquete no sabe si la cuenta existe ni si el código de
+entidad está asignado.
 
 ## Comparación con otros paquetes
 

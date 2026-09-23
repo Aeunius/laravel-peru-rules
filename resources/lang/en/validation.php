@@ -13,5 +13,6 @@ return [
     'documento' => 'The :attribute field must be a valid :tipo number (up to :max letters or digits).',
     'documento_tipo' => 'The :attribute field cannot be validated because the document type is invalid.',
     'celular' => 'The :attribute field must be a valid 9-digit mobile number starting with 9.',
-    'placa_vehicular' => 'The :attribute field must be a valid license plate (for example, ABC-123).',
+    'placa_vehicular' => 'The :attribute field must be a valid license plate (for example, ABC-123 or 2171-AY).',
+    'cci' => 'The :attribute field must be a valid 20-digit CCI.',
 ];
