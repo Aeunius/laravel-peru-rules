@@ -6,7 +6,12 @@ namespace Aeunius\PeruRules\Support;
  * Placa vehicular del formato vigente: una letra, dos letras o dígitos y tres
  * dígitos ("ABC-123", "A1B-234"), con o sin guion.
  *
- * Todavía no cubre las placas de motos ni las especiales.
+ * Incluye las placas especiales, que llevan el prefijo E (Estado "EGA-123",
+ * policía "EPA-123", emergencias "EUA-123", diplomáticas "ECD-123"). Suelen
+ * escribirse con la E separada o en minúscula ("E GA-123", "eGA-123"), y ambas
+ * formas se aceptan.
+ *
+ * Todavía no cubre las placas de motos.
  */
 final class PlacaVehicularValidator
 {
@@ -21,7 +26,10 @@ final class PlacaVehicularValidator
      */
     public static function normalizar(string $placa): ?string
     {
-        if (preg_match('/^([A-Z][A-Z0-9]{2})-?(\d{3})$/', strtoupper(trim($placa)), $partes) !== 1) {
+        // "E GA-123" → "EGA-123": el espacio solo se admite tras la E de las especiales.
+        $placa = preg_replace('/^E\s(?=[A-Z]{2})/', 'E', strtoupper(trim($placa))) ?? '';
+
+        if (preg_match('/^([A-Z][A-Z0-9]{2})-?(\d{3})$/', $placa, $partes) !== 1) {
             return null;
         }
 

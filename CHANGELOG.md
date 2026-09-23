@@ -20,7 +20,8 @@ proyecto usa [versionado semántico](https://semver.org/lang/es/).
   campo, también con comodines en arreglos.
 - Regla `Celular`, que acepta `+51` y separadores, con
   `CelularValidator::normalizar()`.
-- Regla `PlacaVehicular` para el formato vigente, con
+- Regla `PlacaVehicular` para el formato vigente, incluidas las placas especiales
+  con prefijo E (Estado, policía, emergencias, diplomáticas), con
   `PlacaVehicularValidator::normalizar()`.
 - Reglas en texto `carne_extranjeria`, `pasaporte`, `celular`,
   `placa_vehicular` y `documento_identidad:campo`.

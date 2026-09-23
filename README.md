@@ -21,7 +21,7 @@ el dígito verificador sin conectarse a ningún servicio externo.
 | `new Pasaporte` | `pasaporte` | Hasta 12 letras o números |
 | `DocumentoIdentidad::segun('tipo_doc')` | `documento_identidad:tipo_doc` | El número según el tipo de documento de otro campo (catálogo 06 de la SUNAT) |
 | `new Celular` | `celular` | 9 dígitos que empiezan con 9; acepta `+51` y separadores |
-| `new PlacaVehicular` | `placa_vehicular` | Formato vigente: `ABC-123` o `A1B-234`, con o sin guion |
+| `new PlacaVehicular` | `placa_vehicular` | Formato vigente: `ABC-123` o `A1B-234`, con o sin guion. Incluye las especiales con prefijo E (`E GA-123`, `eGA-123`) |
 
 Se comprueba que el número sea **válido**, no que **exista**: un RUC puede tener
 un dígito verificador correcto y aun así no estar inscrito o no estar activo en
@@ -123,6 +123,7 @@ use Aeunius\PeruRules\Support\PlacaVehicularValidator;
 
 CelularValidator::normalizar('+51 987 654 321');   // "987654321"
 PlacaVehicularValidator::normalizar('abc123');     // "ABC-123"
+PlacaVehicularValidator::normalizar('e GA-123');   // "EGA-123"
 CelularValidator::normalizar('014567890');         // null: no es un celular
 ```
 

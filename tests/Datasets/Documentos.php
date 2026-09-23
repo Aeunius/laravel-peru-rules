@@ -27,6 +27,12 @@ dataset('placas validas', [
     'dos dígitos' => ['F55-597', 'F55-597'],
     'minúsculas' => ['abc-123', 'ABC-123'],
     'con espacios alrededor' => [' ABC-123 ', 'ABC-123'],
+    'Estado' => ['EGA-123', 'EGA-123'],
+    'Estado con e minúscula' => ['eGA-123', 'EGA-123'],
+    'Estado con la E separada' => ['E GA-123', 'EGA-123'],
+    'Estado con e separada y sin guion' => ['e GA123', 'EGA-123'],
+    'policía' => ['E PA-123', 'EPA-123'],
+    'diplomática' => ['E CD-123', 'ECD-123'],
 ]);
 
 dataset('placas invalidas', [
@@ -38,4 +44,7 @@ dataset('placas invalidas', [
     'con espacio en medio' => 'ABC 123',
     'dos guiones' => 'ABC--123',
     'con ñ' => 'ÑBC-123',
+    'espacio tras otra letra' => 'A BC-123',
+    'dos espacios tras la E' => 'E  GA-123',
+    'E separada de un dígito' => 'E G1-123',
 ]);
