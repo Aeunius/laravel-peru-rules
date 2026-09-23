@@ -1,0 +1,65 @@
+{
+    "name": "aeunius/laravel-peru-rules",
+    "description": "Reglas de validación, casts y datos de referencia para documentos peruanos en Laravel: RUC, DNI, carné de extranjería, celular, placa, ubigeo y CCI.",
+    "keywords": [
+        "laravel",
+        "validation",
+        "peru",
+        "ruc",
+        "dni",
+        "ubigeo",
+        "cci",
+        "sunat"
+    ],
+    "homepage": "https://github.com/Aeunius/laravel-peru-rules",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alejandro Gonzales",
+            "homepage": "https://github.com/Aeunius"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/contracts": "^11.0|^12.0|^13.0",
+        "illuminate/support": "^11.0|^12.0|^13.0",
+        "illuminate/validation": "^11.0|^12.0|^13.0",
+        "spatie/laravel-package-tools": "^1.16.2"
+    },
+    "require-dev": {
+        "larastan/larastan": "^3.0",
+        "laravel/pint": "^1.18",
+        "orchestra/testbench": "^9.0|^10.0|^11.0",
+        "pestphp/pest": "^3.0|^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Aeunius\\PeruRules\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Aeunius\\PeruRules\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "pest",
+        "analyse": "phpstan analyse --memory-limit=1G",
+        "format": "pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Aeunius\\PeruRules\\PeruRulesServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
