@@ -6,5 +6,5 @@ parameters:
     paths:
         - src
         - config
-        - lang
+        - resources/lang
     tmpDir: .phpstan.cache
