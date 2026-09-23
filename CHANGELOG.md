@@ -7,6 +7,10 @@ proyecto usa [versionado semántico](https://semver.org/lang/es/).
 
 ## [Sin publicar]
 
+## [0.1.0] - 2026-09-23
+
+Primera versión.
+
 ### Agregado
 
 - Regla `Ruc`: formato, prefijo y dígito verificador, con las variantes
@@ -30,3 +34,6 @@ proyecto usa [versionado semántico](https://semver.org/lang/es/).
   `placa_vehicular`, `cci` y `documento_identidad:campo`.
 - Mensajes en español e inglés, publicables con
   `php artisan vendor:publish --tag=peru-rules-translations`.
+
+[Sin publicar]: https://github.com/Aeunius/laravel-peru-rules/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/Aeunius/laravel-peru-rules/releases/tag/v0.1.0
