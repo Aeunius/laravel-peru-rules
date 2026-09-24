@@ -16,6 +16,17 @@ proyecto usa [versionado semántico](https://semver.org/lang/es/).
 - Enum `TipoContribuyente` (`Natural`, `Juridica`, `Especial`) según el prefijo
   del RUC.
 
+### Cambiado
+
+- **Incompatible:** `isValid()` pasa a llamarse `esValido()` en todos los
+  validadores de `Support\` y en `TipoDocumento`, para que la API quede toda en
+  español.
+
+### Eliminado
+
+- **Incompatible:** el archivo de configuración `config/peru-rules.php` y la
+  etiqueta `peru-rules-config`. No tenía opciones.
+
 ## [0.1.0] - 2026-09-23
 
 Primera versión.

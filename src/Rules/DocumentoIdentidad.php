@@ -73,7 +73,7 @@ final class DocumentoIdentidad implements DataAwareRule, ValidationRule
             $value = (string) $value;
         }
 
-        if (! is_string($value) || ! $tipo->isValid($value)) {
+        if (! is_string($value) || ! $tipo->esValido($value)) {
             $fail('peru-rules::validation.documento')->translate([
                 'tipo' => Str::lcfirst($tipo->descripcion()),
                 'max' => $tipo->longitudMaxima(),

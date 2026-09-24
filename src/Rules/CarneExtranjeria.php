@@ -18,7 +18,7 @@ final class CarneExtranjeria implements ValidationRule
             $value = (string) $value;
         }
 
-        if (! is_string($value) || ! AlfanumericoValidator::isValid($value, TipoDocumento::CarneExtranjeria->longitudMaxima())) {
+        if (! is_string($value) || ! AlfanumericoValidator::esValido($value, TipoDocumento::CarneExtranjeria->longitudMaxima())) {
             $fail('peru-rules::validation.carne_extranjeria')->translate();
         }
     }

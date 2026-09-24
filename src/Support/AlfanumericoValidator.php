@@ -9,7 +9,7 @@ namespace Aeunius\PeruRules\Support;
  */
 final class AlfanumericoValidator
 {
-    public static function isValid(string $numero, int $maximo): bool
+    public static function esValido(string $numero, int $maximo): bool
     {
         return preg_match('/^[A-Za-z0-9]{1,'.$maximo.'}$/', $numero) === 1;
     }

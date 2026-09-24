@@ -14,7 +14,7 @@ final class Cci implements ValidationRule
 {
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (! is_string($value) || ! CciValidator::isValid($value)) {
+        if (! is_string($value) || ! CciValidator::esValido($value)) {
             $fail('peru-rules::validation.cci')->translate();
         }
     }

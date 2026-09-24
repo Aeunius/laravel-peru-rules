@@ -24,7 +24,6 @@ class PeruRulesServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('peru-rules')
-            ->hasConfigFile()
             ->hasTranslations();
     }
 

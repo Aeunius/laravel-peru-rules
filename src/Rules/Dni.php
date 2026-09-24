@@ -18,7 +18,7 @@ final class Dni implements ValidationRule
             $value = (string) $value;
         }
 
-        if (! is_string($value) || ! DniValidator::isValid($value)) {
+        if (! is_string($value) || ! DniValidator::esValido($value)) {
             $fail('peru-rules::validation.dni')->translate();
         }
     }

@@ -50,12 +50,12 @@ enum TipoDocumento: string
         };
     }
 
-    public function isValid(string $numero): bool
+    public function esValido(string $numero): bool
     {
         return match ($this) {
-            self::Dni => DniValidator::isValid($numero),
-            self::Ruc => RucValidator::isValid($numero),
-            default => AlfanumericoValidator::isValid($numero, $this->longitudMaxima()),
+            self::Dni => DniValidator::esValido($numero),
+            self::Ruc => RucValidator::esValido($numero),
+            default => AlfanumericoValidator::esValido($numero, $this->longitudMaxima()),
         };
     }
 

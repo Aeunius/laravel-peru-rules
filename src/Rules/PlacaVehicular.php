@@ -14,7 +14,7 @@ final class PlacaVehicular implements ValidationRule
 {
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (! is_string($value) || ! PlacaVehicularValidator::isValid($value)) {
+        if (! is_string($value) || ! PlacaVehicularValidator::esValido($value)) {
             $fail('peru-rules::validation.placa_vehicular')->translate();
         }
     }

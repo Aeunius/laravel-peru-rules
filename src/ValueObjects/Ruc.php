@@ -33,7 +33,7 @@ final readonly class Ruc implements Castable, JsonSerializable, Stringable
     {
         $ruc = (string) $ruc;
 
-        return RucValidator::isValid($ruc) ? new self($ruc) : null;
+        return RucValidator::esValido($ruc) ? new self($ruc) : null;
     }
 
     /** Los 11 dígitos. */

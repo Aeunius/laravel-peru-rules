@@ -13,7 +13,7 @@ namespace Aeunius\PeruRules\Support;
  */
 final class CciValidator
 {
-    public static function isValid(string $cci): bool
+    public static function esValido(string $cci): bool
     {
         return self::normalizar($cci) !== null;
     }

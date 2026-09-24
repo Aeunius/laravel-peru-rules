@@ -110,7 +110,7 @@ El enum también sirve fuera de la validación:
 ```php
 TipoDocumento::from('6')->descripcion();        // "RUC"
 TipoDocumento::Pasaporte->longitudMaxima();     // 12
-TipoDocumento::Dni->isValid('12345678');        // true
+TipoDocumento::Dni->esValido('12345678');       // true
 ```
 
 ### RUC como objeto en tus modelos
@@ -186,9 +186,9 @@ Los algoritmos no dependen de Laravel y se pueden usar directamente:
 ```php
 use Aeunius\PeruRules\Support\RucValidator;
 
-RucValidator::isValid('20131312955');                                  // true
-RucValidator::isValid('20131312955', [RucValidator::NATURAL]);         // false
-RucValidator::digitoVerificador('2013131295');                         // 5
+RucValidator::esValido('20131312955');                         // true
+RucValidator::esValido('20131312955', [RucValidator::NATURAL]); // false
+RucValidator::digitoVerificador('2013131295');                 // 5
 ```
 
 ## Mensajes

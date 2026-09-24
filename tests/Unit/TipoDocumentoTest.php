@@ -9,8 +9,8 @@ it('usa los códigos del catálogo 06 de la SUNAT', function () {
 });
 
 it('valida el número según el tipo', function (TipoDocumento $tipo, string $valido, string $invalido) {
-    expect($tipo->isValid($valido))->toBeTrue()
-        ->and($tipo->isValid($invalido))->toBeFalse();
+    expect($tipo->esValido($valido))->toBeTrue()
+        ->and($tipo->esValido($invalido))->toBeFalse();
 })->with([
     'DNI' => [TipoDocumento::Dni, '12345678', '1234567'],
     'RUC' => [TipoDocumento::Ruc, '20131312955', '20131312956'],
@@ -21,7 +21,7 @@ it('valida el número según el tipo', function (TipoDocumento $tipo, string $va
 ]);
 
 it('limita los alfanuméricos a su longitud máxima', function () {
-    expect(AlfanumericoValidator::isValid(str_repeat('A', 12), 12))->toBeTrue()
-        ->and(AlfanumericoValidator::isValid(str_repeat('A', 13), 12))->toBeFalse()
-        ->and(AlfanumericoValidator::isValid('', 12))->toBeFalse();
+    expect(AlfanumericoValidator::esValido(str_repeat('A', 12), 12))->toBeTrue()
+        ->and(AlfanumericoValidator::esValido(str_repeat('A', 13), 12))->toBeFalse()
+        ->and(AlfanumericoValidator::esValido('', 12))->toBeFalse();
 });

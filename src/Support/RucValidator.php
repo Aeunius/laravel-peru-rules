@@ -25,7 +25,7 @@ final class RucValidator
     /**
      * @param  list<string>  $prefijos  Prefijos aceptados; por defecto, todos los válidos.
      */
-    public static function isValid(string $ruc, array $prefijos = self::PREFIJOS): bool
+    public static function esValido(string $ruc, array $prefijos = self::PREFIJOS): bool
     {
         if (preg_match('/^\d{11}$/', $ruc) !== 1) {
             return false;

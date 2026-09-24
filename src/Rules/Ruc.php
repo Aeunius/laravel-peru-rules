@@ -34,7 +34,7 @@ final class Ruc implements ValidationRule
             $value = (string) $value;
         }
 
-        if (! is_string($value) || ! RucValidator::isValid($value, $this->prefijos)) {
+        if (! is_string($value) || ! RucValidator::esValido($value, $this->prefijos)) {
             $fail("peru-rules::validation.{$this->mensaje}")->translate();
         }
     }

@@ -7,7 +7,7 @@ namespace Aeunius\PeruRules\Support;
  */
 final class DniValidator
 {
-    public static function isValid(string $dni): bool
+    public static function esValido(string $dni): bool
     {
         return preg_match('/^\d{8}$/', $dni) === 1;
     }

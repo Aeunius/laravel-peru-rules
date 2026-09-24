@@ -23,7 +23,7 @@ final class PlacaVehicularValidator
     /** Dos caracteres con al menos una letra. */
     private const PAR = '(?=[A-Z0-9]{0,1}[A-Z])[A-Z0-9]{2}';
 
-    public static function isValid(string $placa): bool
+    public static function esValido(string $placa): bool
     {
         return self::normalizar($placa) !== null;
     }

@@ -7,7 +7,7 @@ namespace Aeunius\PeruRules\Support;
  */
 final class CelularValidator
 {
-    public static function isValid(string $celular): bool
+    public static function esValido(string $celular): bool
     {
         return self::normalizar($celular) !== null;
     }

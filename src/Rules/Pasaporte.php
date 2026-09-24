@@ -18,7 +18,7 @@ final class Pasaporte implements ValidationRule
             $value = (string) $value;
         }
 
-        if (! is_string($value) || ! AlfanumericoValidator::isValid($value, TipoDocumento::Pasaporte->longitudMaxima())) {
+        if (! is_string($value) || ! AlfanumericoValidator::esValido($value, TipoDocumento::Pasaporte->longitudMaxima())) {
             $fail('peru-rules::validation.pasaporte')->translate();
         }
     }

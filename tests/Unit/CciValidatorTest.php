@@ -3,12 +3,12 @@
 use Aeunius\PeruRules\Support\CciValidator;
 
 it('acepta y normaliza CCI', function (string $cci, string $normalizado) {
-    expect(CciValidator::isValid($cci))->toBeTrue()
+    expect(CciValidator::esValido($cci))->toBeTrue()
         ->and(CciValidator::normalizar($cci))->toBe($normalizado);
 })->with('ccis validos');
 
 it('rechaza lo que no es un CCI', function (string $cci) {
-    expect(CciValidator::isValid($cci))->toBeFalse()
+    expect(CciValidator::esValido($cci))->toBeFalse()
         ->and(CciValidator::normalizar($cci))->toBeNull();
 })->with('ccis invalidos');
 
@@ -25,7 +25,7 @@ it('sigue el ejemplo del README', function () {
 it('acepta un solo par de dígitos de control', function (string $cci, string $digitos) {
     $validos = array_filter(
         range(0, 99),
-        fn (int $control) => CciValidator::isValid(substr($digitos, 0, 18).sprintf('%02d', $control)),
+        fn (int $control) => CciValidator::esValido(substr($digitos, 0, 18).sprintf('%02d', $control)),
     );
 
     expect($validos)->toHaveCount(1);

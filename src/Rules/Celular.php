@@ -19,7 +19,7 @@ final class Celular implements ValidationRule
             $value = (string) $value;
         }
 
-        if (! is_string($value) || ! CelularValidator::isValid($value)) {
+        if (! is_string($value) || ! CelularValidator::esValido($value)) {
             $fail('peru-rules::validation.celular')->translate();
         }
     }
