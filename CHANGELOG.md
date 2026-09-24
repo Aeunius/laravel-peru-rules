@@ -7,6 +7,11 @@ proyecto usa [versionado semántico](https://semver.org/lang/es/).
 
 ## [Sin publicar]
 
+## [1.0.0] - 2026-09-23
+
+Primera versión estable: la API pública queda fija y solo cambiará en una nueva
+versión mayor.
+
 ### Agregado
 
 - `ValueObjects\Ruc`: un RUC válido como objeto, con `valor()`, `formateado()`,
@@ -55,5 +60,6 @@ Primera versión.
 - Mensajes en español e inglés, publicables con
   `php artisan vendor:publish --tag=peru-rules-translations`.
 
-[Sin publicar]: https://github.com/Aeunius/laravel-peru-rules/compare/v0.1.0...HEAD
+[Sin publicar]: https://github.com/Aeunius/laravel-peru-rules/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/Aeunius/laravel-peru-rules/compare/v0.1.0...v1.0.0
 [0.1.0]: https://github.com/Aeunius/laravel-peru-rules/releases/tag/v0.1.0
