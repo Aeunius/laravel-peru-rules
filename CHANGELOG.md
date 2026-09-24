@@ -7,6 +7,17 @@ proyecto usa [versionado semántico](https://semver.org/lang/es/).
 
 ## [Sin publicar]
 
+## [1.0.2] - 2026-09-23
+
+### Corregido
+
+- El RUC, el DNI y los documentos alfanuméricos ya no aceptan un salto de línea
+  al final (`"12345678\n"`). En PCRE, `$` también coincide antes de un salto de
+  línea final; ahora las expresiones usan el modificador `D` en todos los
+  validadores de `Support\`.
+- Nuevos casos de prueba compartidos para los espacios que no son ASCII (el
+  espacio no separable no cuenta como separador) y para la `ß` en las placas.
+
 ## [1.0.1] - 2026-09-23
 
 ### Agregado
@@ -69,7 +80,8 @@ Primera versión.
 - Mensajes en español e inglés, publicables con
   `php artisan vendor:publish --tag=peru-rules-translations`.
 
-[Sin publicar]: https://github.com/Aeunius/laravel-peru-rules/compare/v1.0.1...HEAD
+[Sin publicar]: https://github.com/Aeunius/laravel-peru-rules/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/Aeunius/laravel-peru-rules/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/Aeunius/laravel-peru-rules/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/Aeunius/laravel-peru-rules/compare/v0.1.0...v1.0.0
 [0.1.0]: https://github.com/Aeunius/laravel-peru-rules/releases/tag/v0.1.0
