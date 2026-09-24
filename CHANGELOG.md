@@ -7,6 +7,15 @@ proyecto usa [versionado semántico](https://semver.org/lang/es/).
 
 ## [Sin publicar]
 
+## [1.0.1] - 2026-09-23
+
+### Agregado
+
+- Los casos de prueba de los algoritmos pasan a `tests/fixtures/*.json`, de
+  donde los leen los datasets de Pest. Los comparte el paquete de JavaScript
+  [`peru-rules-js`](https://github.com/Aeunius/peru-rules-js). No cambia nada en
+  el código del paquete.
+
 ## [1.0.0] - 2026-09-23
 
 Primera versión estable: la API pública queda fija y solo cambiará en una nueva
@@ -60,6 +69,7 @@ Primera versión.
 - Mensajes en español e inglés, publicables con
   `php artisan vendor:publish --tag=peru-rules-translations`.
 
-[Sin publicar]: https://github.com/Aeunius/laravel-peru-rules/compare/v1.0.0...HEAD
+[Sin publicar]: https://github.com/Aeunius/laravel-peru-rules/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/Aeunius/laravel-peru-rules/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/Aeunius/laravel-peru-rules/compare/v0.1.0...v1.0.0
 [0.1.0]: https://github.com/Aeunius/laravel-peru-rules/releases/tag/v0.1.0
