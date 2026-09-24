@@ -26,7 +26,7 @@ final class CciValidator
     {
         $cci = preg_replace('/[\s\-]/', '', $cci) ?? '';
 
-        if (preg_match('/^\d{20}$/', $cci) !== 1) {
+        if (preg_match('/^\d{20}$/D', $cci) !== 1) {
             return null;
         }
 
@@ -45,7 +45,7 @@ final class CciValidator
      */
     public static function digitosControl(string $entidadOficina, string $cuenta): string
     {
-        if (preg_match('/^\d{6}$/', $entidadOficina) !== 1 || preg_match('/^\d{12}$/', $cuenta) !== 1) {
+        if (preg_match('/^\d{6}$/D', $entidadOficina) !== 1 || preg_match('/^\d{12}$/D', $cuenta) !== 1) {
             throw new \InvalidArgumentException('Se esperaban 6 dígitos de entidad y oficina, y 12 de cuenta.');
         }
 

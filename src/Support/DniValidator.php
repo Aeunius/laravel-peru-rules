@@ -9,6 +9,6 @@ final class DniValidator
 {
     public static function esValido(string $dni): bool
     {
-        return preg_match('/^\d{8}$/', $dni) === 1;
+        return preg_match('/^\d{8}$/D', $dni) === 1;
     }
 }

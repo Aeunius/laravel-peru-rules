@@ -10,6 +10,7 @@
     "con letra": "1234567A",
     "con dígito verificador": "12345678-9",
     "con espacios": " 12345678",
-    "vacío": ""
+    "vacío": "",
+    "salto de línea al final": "12345678\n"
   }
 }

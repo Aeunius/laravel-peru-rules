@@ -11,6 +11,6 @@ final class AlfanumericoValidator
 {
     public static function esValido(string $numero, int $maximo): bool
     {
-        return preg_match('/^[A-Za-z0-9]{1,'.$maximo.'}$/', $numero) === 1;
+        return preg_match('/^[A-Za-z0-9]{1,'.$maximo.'}$/D', $numero) === 1;
     }
 }

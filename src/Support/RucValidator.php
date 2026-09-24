@@ -27,7 +27,7 @@ final class RucValidator
      */
     public static function esValido(string $ruc, array $prefijos = self::PREFIJOS): bool
     {
-        if (preg_match('/^\d{11}$/', $ruc) !== 1) {
+        if (preg_match('/^\d{11}$/D', $ruc) !== 1) {
             return false;
         }
 
@@ -46,7 +46,7 @@ final class RucValidator
      */
     public static function digitoVerificador(string $base): int
     {
-        if (preg_match('/^\d{10}$/', $base) !== 1) {
+        if (preg_match('/^\d{10}$/D', $base) !== 1) {
             throw new \InvalidArgumentException('Se esperaban los 10 primeros dígitos del RUC.');
         }
 

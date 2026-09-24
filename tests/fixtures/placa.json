@@ -17,7 +17,8 @@
     "moto: dígitos y letra, dígito": ["1234-A1", "1234-A1"],
     "moto: sin guion": ["2171ay", "2171-AY"],
     "moto: letra, dígito y dígitos": ["C5-4481", "C5-4481"],
-    "moto: dos letras y dígitos": ["ab-1234", "AB-1234"]
+    "moto: dos letras y dígitos": ["ab-1234", "AB-1234"],
+    "Estado con tabulación tras la E": ["E\tGA-123", "EGA-123"]
   },
   "invalidos": {
     "empieza con dígito": "1BC-123",
@@ -34,6 +35,9 @@
     "moto: sin letras": "2171-56",
     "moto: tres caracteres al final": "2171-AYZ",
     "moto: cinco dígitos": "21712-AY",
-    "moto: dos dígitos al inicio": "12-4481"
+    "moto: dos dígitos al inicio": "12-4481",
+    "con ß": "ßC-123",
+    "espacio no separable alrededor": "\u00a0ABC-123",
+    "espacio no separable tras la E": "E\u00a0GA-123"
   }
 }

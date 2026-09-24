@@ -23,7 +23,7 @@ final class CelularValidator
     {
         $digitos = preg_replace('/[\s\-.()]/', '', $celular) ?? '';
 
-        if (preg_match('/^(?:\+?51)?(9\d{8})$/', $digitos, $partes) !== 1) {
+        if (preg_match('/^(?:\+?51)?(9\d{8})$/D', $digitos, $partes) !== 1) {
             return null;
         }
 

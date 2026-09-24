@@ -38,9 +38,9 @@ final class PlacaVehicularValidator
         $placa = preg_replace('/^E\s(?=[A-Z]{2})/', 'E', strtoupper(trim($placa))) ?? '';
 
         $formatos = [
-            '/^([A-Z][A-Z0-9]{2})-?(\d{3})$/',
-            '/^(\d{4})-?('.self::PAR.')$/',
-            '/^('.self::PAR.')-(\d{4})$/',
+            '/^([A-Z][A-Z0-9]{2})-?(\d{3})$/D',
+            '/^(\d{4})-?('.self::PAR.')$/D',
+            '/^('.self::PAR.')-(\d{4})$/D',
         ];
 
         foreach ($formatos as $formato) {
