@@ -265,6 +265,9 @@ make lint      # Pint, sin cambiar archivos
 make help      # todos los comandos
 ```
 
+Los casos de prueba de los algoritmos están en [`tests/fixtures`](tests/fixtures)
+y los comparte el paquete de JavaScript.
+
 El CI prueba con Laravel 12 y 13, con PHP 8.2 a 8.5, y también con las versiones
 mínimas de las dependencias.
 
