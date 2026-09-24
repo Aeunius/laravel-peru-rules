@@ -264,8 +264,8 @@ npm install @aeunius/peru-rules
 ```
 
 ```ts
-import { ruc } from '@aeunius/peru-rules'
-import { usePeruRules } from '@aeunius/peru-rules/vue'
+import { ruc } from '@aeunius/peru-rules';
+import { usePeruRules } from '@aeunius/peru-rules/vue';
 
 ruc.esValido('20131312955'); // true
 
