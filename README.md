@@ -252,6 +252,30 @@ entidad está asignado.
 | `consulta/laravel` | RUC y DNI | Consulta un servicio externo; este paquete funciona sin conexión |
 | `esolutions/peru` | Dígito verificador del RUC, formato del DNI | Este paquete agrega reglas de Laravel en objeto y en texto, con mensajes traducidos |
 
+## En JavaScript
+
+[`@aeunius/peru-rules`](https://github.com/Aeunius/peru-rules-js) da el mismo
+resultado en el navegador o en Node, porque se prueba con los casos de este
+paquete (`tests/fixtures/`). Sirve para validar el formulario antes de enviarlo,
+e incluye reglas para Vue (Vuetify, Quasar y VeeValidate):
+
+```bash
+npm install @aeunius/peru-rules
+```
+
+```ts
+import { ruc } from '@aeunius/peru-rules'
+import { usePeruRules } from '@aeunius/peru-rules/vue'
+
+ruc.esValido('20131312955'); // true
+
+const { reglas } = usePeruRules();
+reglas.ruc('20131312956'); // "El RUC no es válido."
+```
+
+Si cambias una regla, cambia primero los casos en `tests/fixtures/` y publica un
+tag: el paquete de JavaScript fija sus casos a un tag de este repositorio.
+
 ## Desarrollo
 
 Todo corre en Docker con la imagen oficial `composer:2`, así que no hace falta
@@ -264,9 +288,6 @@ make analyse   # PHPStan
 make lint      # Pint, sin cambiar archivos
 make help      # todos los comandos
 ```
-
-Los casos de prueba de los algoritmos están en [`tests/fixtures`](tests/fixtures)
-y los comparte el paquete de JavaScript.
 
 El CI prueba con Laravel 12 y 13, con PHP 8.2 a 8.5, y también con las versiones
 mínimas de las dependencias.
