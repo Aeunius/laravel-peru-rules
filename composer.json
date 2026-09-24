@@ -1,13 +1,12 @@
 {
     "name": "aeunius/laravel-peru-rules",
-    "description": "Reglas de validación, casts y datos de referencia para documentos peruanos en Laravel: RUC, DNI, carné de extranjería, celular, placa, ubigeo y CCI.",
+    "description": "Reglas de validación y casts de Laravel para documentos y datos peruanos: RUC, DNI, carné de extranjería, pasaporte, celular, placa vehicular y CCI.",
     "keywords": [
         "laravel",
         "validation",
         "peru",
         "ruc",
         "dni",
-        "ubigeo",
         "cci",
         "sunat"
     ],

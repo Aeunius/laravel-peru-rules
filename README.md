@@ -113,6 +113,50 @@ TipoDocumento::Pasaporte->longitudMaxima();     // 12
 TipoDocumento::Dni->isValid('12345678');        // true
 ```
 
+### RUC como objeto en tus modelos
+
+`ValueObjects\Ruc` representa un RUC que ya pasó la validación: no se puede crear
+con uno inválido. Úsalo como cast de Eloquent:
+
+```php
+use Aeunius\PeruRules\ValueObjects\Ruc;
+
+class Cliente extends Model
+{
+    protected function casts(): array
+    {
+        return [
+            'ruc' => Ruc::class,   // o RucCast::class
+        ];
+    }
+}
+```
+
+```php
+$cliente->ruc->valor();        // "20131312955"
+$cliente->ruc->formateado();   // "20-13131295-5"
+$cliente->ruc->tipo();         // TipoContribuyente::Juridica
+$cliente->ruc->esJuridica();   // true
+$cliente->ruc->dni();          // null; en un RUC 10 da los 8 dígitos del DNI
+
+$cliente->ruc = '20100047218';             // o un entero, o un objeto Ruc
+$cliente->ruc = '20100047219';             // InvalidArgumentException
+```
+
+En la base de datos se guardan los 11 dígitos como texto, y `toArray()` y
+`toJson()` también devuelven los 11 dígitos. El cast es estricto al leer: si la
+tabla tiene un RUC inválido, lanza una excepción en vez de devolver `null`.
+
+Fuera de Eloquent:
+
+```php
+Ruc::from('20131312955');      // Ruc, o InvalidArgumentException
+Ruc::tryFrom('20131312956');   // null
+```
+
+Si en el mismo archivo usas también la regla `Rules\Ruc`, importa uno de los dos
+con alias: `use Aeunius\PeruRules\ValueObjects\Ruc as RucValor;`.
+
 ### Celular, placa y CCI: normalizar antes de guardar
 
 Las reglas `Celular`, `PlacaVehicular` y `Cci` aceptan varias formas de escribir el mismo

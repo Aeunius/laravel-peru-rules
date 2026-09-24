@@ -7,6 +7,15 @@ proyecto usa [versionado semántico](https://semver.org/lang/es/).
 
 ## [Sin publicar]
 
+### Agregado
+
+- `ValueObjects\Ruc`: un RUC válido como objeto, con `valor()`, `formateado()`,
+  `tipo()`, `esNatural()`, `esJuridica()`, `dni()` y `esIgual()`. Se crea con
+  `Ruc::from()` o `Ruc::tryFrom()`.
+- `Casts\RucCast`, también disponible como `'ruc' => Ruc::class`.
+- Enum `TipoContribuyente` (`Natural`, `Juridica`, `Especial`) según el prefijo
+  del RUC.
+
 ## [0.1.0] - 2026-09-23
 
 Primera versión.
